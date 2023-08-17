@@ -1,0 +1,55 @@
+﻿@using System.Globalization
+@model BettingWebApp.Models.ViewModels
+
+@{
+    ViewData["Title"] = "Betting24H Matches";
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <table>
+        <thead>
+            <tr>
+                <th style="padding: 1rem">MatchID</th>
+                <th style="padding: 1rem">Team1</th>
+                <th style="padding: 1rem">VS</th>
+                <th style="padding: 1rem">Team2</th>
+                <th style="padding: 1rem">StartDate</th>
+                <th style="padding: 1rem">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var matchData in Model.MatchData)
+            {
+                var MatchDataId = matchData.ID;
+                string startDateString = matchData.StartDate;
+                DateTime startDateTime;
+
+                if (DateTime.TryParseExact(startDateString, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDateTime))
+                {
+                    DateTime currentDateTime = DateTime.Now;
+                    TimeSpan timeDifference = startDateTime - currentDateTime;
+
+                    if (timeDifference.TotalHours <= 24 && timeDifference.TotalHours > 0)
+                    {
+                        var teamOne = matchData.Name.Split("-").First();
+                        var teamSecond = matchData.Name.Split("-").Last();
+
+                        <tr>
+                            <td>@matchData.ID</td>
+                            <td style="padding: 1rem">@teamOne</td>
+                            <td style="padding: 1rem">VS</td>
+                            <td style="padding: 1rem">@teamSecond</td>
+                            <td style="padding: 1rem">@matchData.StartDate</td>
+                            <td style="padding: 1rem"><a asp-controller="Home" asp-action="ViewMatch" asp-route-id="@matchData.ID">View Details</a></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>

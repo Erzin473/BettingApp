@@ -1,0 +1,31 @@
+﻿@model BettingWebApp.Models.Match
+
+@{
+    ViewData["Title"] = "View Match Details";
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <table>
+        <thead>
+            <tr>
+                <th style="padding: 1rem">Match ID</th>
+                <th style="padding: 1rem">Team1</th>
+                <th style="padding: 1rem">VS</th>
+                <th style="padding: 1rem">Team2</th>
+                <th style="padding: 1rem">StartDate</th>
+                <th style="padding: 1rem">MatchType</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 1rem">@Model.ID</td>
+                <td style="padding: 1rem">@Model.Name.Split("-").First()</td>
+                <td style="padding: 1rem">VS</td>
+                <td style="padding: 1rem">@Model.Name.Split("-").Last()</td>
+                <td style="padding: 1rem">@Model.StartDate</td>
+                <td style="padding: 1rem">@Model.MatchType</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
